@@ -40,6 +40,3 @@ http :8000/domain-count root_url=https://www.rust-lang.org/
 
 > 593
 ```
-
-I tried it on "https://www.google.com" and it went absolutely crazy for a few minutes,
-then segfaulted - nice! (I checked the memory usage, nothing obviously wrong).

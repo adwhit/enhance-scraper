@@ -145,8 +145,9 @@ fn client() -> Client {
     let connector = awc::Connector::new()
         .ssl(ssl)
         .finish();
-    // TODO extend timeout, at moment it fails easily
-    Client::build().connector(connector).finish()
+    Client::build()
+        .timeout(std::time::Duration::from_secs(10))
+        .connector(connector).finish()
 }
 
 fn scrape_urls(
@@ -178,7 +179,7 @@ fn scrape_urls(
         .flatten()
         // now we have a stream of futures, each future is a client request
         // we want to limit the number of requests in flight at once
-        .buffer_unordered(500)
+        .buffer_unordered(20)
         // to make sure it runs forever, we must intercept errors at this point
         .then(|res| {
             ok(match res {
